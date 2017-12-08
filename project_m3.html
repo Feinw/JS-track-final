@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <meta charset="UTF-8">
+    <link rel = 'stylesheet' href = 'styles2.css'>
+    <title>FAKE TWITTER</title>
+</head>
+<body>
+
+<script>
+
+    $(document).ready(function () {
+        $.get("https://jsonplaceholder.typicode.com/users/", function(result){
+            $.each(result, function(i,val) {
+                var $div = $('<div/>', {
+                    class: 'user-card',
+                    id: 'user' + val['id'],
+                    text: val['name'],
+                    click: function (event) {
+                        $(this).children().toggle();
+                        event.stopPropagation();
+                    }
+                });
+                $div.appendTo('#mdiv')
+                var $div = $('<div/>', {
+                    class: 'user-card',
+                    id: 'user' + val['id']+'posts',
+                    text: 'POSTS',
+                    click: function (event) {
+                        $(this).children().toggle();
+                        event.stopPropagation();
+                    }
+                });
+                $div.appendTo('#user'+val['id'])
+                $.get("https://jsonplaceholder.typicode.com/posts?userId="+val['id'], function(res){
+                    $.each(res, function(j,pos) {
+                        var $div = $('<div/>', {
+                            class: 'post-card',
+                            id: 'post' + pos['id'],
+                            text: pos['body'],
+                            click: function (event) {
+                                $(this).children().toggle();
+                                event.stopPropagation();
+                            }
+                        });
+                        $div.appendTo('#user'+val['id']+'posts')
+                        $.get("https://jsonplaceholder.typicode.com/comments?postId="+pos['id'], function(com){
+                            $.each(com, function(k,comm) {
+                                var $div = $('<div/>', {
+                                    class: 'comment-card',
+                                    id: 'comment' + comm['id'],
+                                    text: comm['body']
+                                });
+                                $div.appendTo('#post'+pos['id'])
+
+                            })
+                        })
+                    })
+                })
+                var $div = $('<div/>', {
+                    class: 'user-card',
+                    id: 'user' + val['id']+'todo',
+                    text: 'TODO',
+                    click: function (event) {
+                        $(this).children().toggle();
+                        event.stopPropagation();
+                    }
+                });
+                $div.appendTo('#user'+val['id'])
+                $.get("https://jsonplaceholder.typicode.com/todos?userId="+val['id'], function(res){
+                    $.each(res, function(j,pos) {
+                        var $div = $('<div/>', {
+                            class: 'post-card',
+                            id: 'todo' + pos['id'],
+                            text: pos['title']
+
+                        });
+                        $div.appendTo('#user'+val['id']+'todo')
+                    })
+                })
+
+                var $div = $('<div/>', {
+                    class: 'user-card',
+                    id: 'user' + val['id']+'album',
+                    text: 'ALBUM',
+                    click: function (event) {
+                        $(this).children().toggle();
+                        event.stopPropagation();
+                    }
+                });
+                $div.appendTo('#user'+val['id'])
+                $.get("https://jsonplaceholder.typicode.com/albums?userId="+val['id'], function(res){
+                    $.each(res, function(j,pos) {
+                        var $div = $('<div/>', {
+                            class: 'post-card',
+                            id: 'album' + pos['id'],
+                            text: pos['title'],
+                            click: function (event) {
+                                $(this).children().toggle();
+                                event.stopPropagation();
+                            }
+
+                        });
+                        $div.appendTo('#user'+val['id']+'album')
+                        $.get("https://jsonplaceholder.typicode.com/photos?albumId="+pos['id'], function(res){
+                            $.each(res, function(j,poss) {
+                                var $div = $('<div/>', {
+                                    class: 'comment-card',
+                                    id: 'photo' + poss['id'],
+                                    html : '<img src="'+poss['url']+'"/>'
+
+                                });
+                                $div.appendTo('#album'+pos['id'])
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    })
+
+</script>
+
+<div id="mdiv"></div>
+
+</body>
+</html>
