@@ -9,6 +9,17 @@
     margin:  10px;
     color: blue;
 }
+.under-user-card {
+    font-family: Verdana, Geneva, sans-serif;
+    box-shadow: 0px 5px 5px #888888;
+    border: 2px solid green;
+    background-color: #eef4ed;
+    display: none;
+    flex-flow: column;
+    padding: 10px;
+    margin:  10px;
+    color: #ff44d5;
+}
 .post-card {
     font-family: Verdana, Geneva, sans-serif;
     box-shadow: 0px 5px 5px #888888;

@@ -24,7 +24,7 @@
                 });
                 $div.appendTo('#mdiv')
                 var $div = $('<div/>', {
-                    class: 'user-card',
+                    class: 'under-user-card',
                     id: 'user' + val['id']+'posts',
                     text: 'POSTS',
                     click: function (event) {
@@ -50,8 +50,8 @@
                                 var $div = $('<div/>', {
                                     class: 'comment-card',
                                     id: 'comment' + comm['id'],
-                                    text: comm['body']
-                                });
+                                    text: comm['email']+":"
+                                }).append('<br/>').append(comm['body']);
                                 $div.appendTo('#post'+pos['id'])
 
                             })
@@ -59,7 +59,7 @@
                     })
                 })
                 var $div = $('<div/>', {
-                    class: 'user-card',
+                    class: 'under-user-card',
                     id: 'user' + val['id']+'todo',
                     text: 'TODO',
                     click: function (event) {
@@ -75,13 +75,19 @@
                             id: 'todo' + pos['id'],
                             text: pos['title']
 
-                        });
+                        }).append("<br/>");
+                        if (pos['completed']==false){
+                            $div.append("Not Done")
+                        }
+                        else if (pos['completed']==true){
+                            $div.append("Done")
+                        }
                         $div.appendTo('#user'+val['id']+'todo')
                     })
                 })
 
                 var $div = $('<div/>', {
-                    class: 'user-card',
+                    class: 'under-user-card',
                     id: 'user' + val['id']+'album',
                     text: 'ALBUM',
                     click: function (event) {
